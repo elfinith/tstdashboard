@@ -1,3 +1,10 @@
+<script type='text/javascript'>
+$(function() {
+    Dashing.widget_base_dimensions = [240, 320]
+    Dashing.numColumns = 5
+});
+</script>
+
 <% content_for :title do %>Дашь борд<% end %>
 <div class="gridster">
   <ul>
@@ -9,23 +16,34 @@
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
       <div data-id="davmail-mem" data-view="Meter" data-title="davmail MEM" data-min="0" data-max="100"></div>
     </li>        
+    
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="davmailsessions" data-view="Number" data-title="Сессий davmail"></div>
+    </li>
 
-    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-      <div data-id="eth0graph" data-view="Graph" data-title="Соединений на eth0" style="background-color:#ff9618"></div>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="excsessions" data-view="Number" data-title="Сессий Exchange"></div>
+    </li>
+
+    <li data-row="2" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="eth0graph" data-view="Graph" data-title="Соединений LAN" style="background-color:#ff9618"></div>
     </li>
     
-    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-      <div data-id="eth1graph" data-view="Graph" data-title="Соединений на eth1" style="background-color:#ff9618"></div>
+    <li data-row="3" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="loadavg1min" data-view="Graph" data-title="Загрузка сервера панели" style="background-color:#47bbb3;" data-moreinfo="1 min intervals" ></div>
     </li>    
     
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="loadavg1min" data-view="Graph" data-title="Server load" style="background-color:#47bbb3;" data-moreinfo="1 min intervals" ></div>
+      <div data-id="squidsessions" data-view="Number" data-title="Сессий Squid" style="background-color:#00bf5f"></div>
+    </li>
+
+    <li data-row="2" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="loadlangate" data-view="Number" data-title="Загрузка LANGATE"></div>
     </li>    
     
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="valuation" data-view="Number" data-title="Current Valuation" data-moreinfo="In billions" data-prefix="$"></div>
-    </li>
-    
+    <li data-row="2" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="eth1graph" data-view="Graph" data-title="Соединений WAN" style="background-color:#ff9618"></div>
+    </li>    
     
   </ul>
 </div>
