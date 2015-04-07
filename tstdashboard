@@ -1,0 +1,87 @@
+#!/bin/bash
+PID_FILE="/var/tmp/tstdashboard.pid"
+DASHBOARD_DIR="/home/dashing/dashing/tstdashboard/"
+LOG="/var/log/dashing.log"
+ERR_LOG="/var/log/dashing_error.log"
+
+start()
+{
+    if [ -e $PID_FILE ]
+    then
+        _pid=$(cat ${PID_FILE})
+        if [ -e /proc/${_pid} ]
+        then
+            echo "Daemon already running with pid = $_pid"
+            exit 0
+        fi
+    fi
+    
+    touch ${LOG}
+    touch ${ERR_LOG}    
+    echo "Starting daemon"    
+    # Перенаправляем стандартный вывод, вывод ошибок и стандартный ввод
+    exec > $LOG
+    exec 2> $ERR_LOG
+    exec < /dev/null    
+
+    cd ${DASHBOARD_DIR}    
+    nohup dashing start &
+    echo $! > ${PID_FILE}    
+}                                                                    
+
+
+stop()
+{
+    if [ -e ${PID_FILE} ]
+    then
+    	_pid=$(cat ${PID_FILE})
+        kill $_pid
+        rt=$?
+        if [ "$rt" == "0" ]
+        then
+    	    echo "Daemon stop"
+        else
+            echo "Error stop daemon"
+        fi
+    else
+        echo "Daemon isn't running"
+    fi
+}
+    	                                	                                                
+status() 
+{
+    if [ -e ${PID_FILE} ]
+    then
+        pid=$(cat ${PID_FILE})
+        ps -ax | grep $pid
+    else
+        echo "Daemon isn't running"
+    fi
+                                                    
+}
+    	                                	                                                                                            
+usage()
+{
+    echo "$0 (start|stop|restart|status)"
+}
+    	                                	                                                                                                
+
+case $1 in
+    "start")
+        start
+	;;
+    "stop")
+        stop
+        ;;
+    "status")
+        status
+        ;;
+    "restart")
+	stop
+        start
+        ;;
+    *)
+        usage
+        ;;
+esac
+exit
